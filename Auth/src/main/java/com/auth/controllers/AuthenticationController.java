@@ -4,7 +4,7 @@ import com.auth.dtos.AuthenticationDTO;
 import com.auth.dtos.LoginResponseDTO;
 import com.auth.dtos.RegisterDTO;
 import com.auth.entities.UserEntitie;
-import com.auth.infra.security.TokenService;
+import com.auth.security.TokenService;
 import com.auth.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
