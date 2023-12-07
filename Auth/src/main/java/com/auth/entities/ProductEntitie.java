@@ -1,4 +1,4 @@
-package com.auth.ProductEntitie;
+package com.auth.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
+
+import com.auth.dtos.ProductRequestDTO;
 
 @Table(name = "product")
 @Entity(name = "product")
@@ -23,7 +25,7 @@ public class ProductEntitie {
 
     private Integer price;
 
-    public Product(ProductRequestDTO data){
+    public ProductEntitie(ProductRequestDTO data){
         this.price = data.price();
         this.name = data.name();
     }

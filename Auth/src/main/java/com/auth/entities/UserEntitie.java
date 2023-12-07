@@ -1,4 +1,4 @@
-package com.auth.UserEntitie;
+package com.auth.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.auth.enums.UserRole;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,7 +30,7 @@ public class UserEntitie implements UserDetails {
     private String password;
     private UserRole role;
 
-    public User(String login, String password, UserRole role){
+    public UserEntitie(String login, String password, UserRole role){
         this.login = login;
         this.password = password;
         this.role = role;
