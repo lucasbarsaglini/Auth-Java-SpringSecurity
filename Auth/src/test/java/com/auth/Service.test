@@ -1,0 +1,57 @@
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
+public class YourClassNameTest {
+    @Mock
+    private UserRepository userRepository;
+
+    private YourClassName yourClass;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        yourClass = new YourClassName(userRepository);
+    }
+
+    @Test
+    void shouldReturnUserDetailsWhenUserExists() {
+        String username = "john";
+
+        // Crie um objeto de usuário simulado
+        User mockUser = new User();
+        mockUser.setLogin(username);
+
+        // Configure o mockuserRepository para retornar o mockUser quando findByLogin for chamado
+        Mockito.when(userRepository.findByLogin(username)).thenReturn(mockUser);
+
+        // Chama o método em teste
+        UserDetails userDetails = yourClass.loadUserByUsername(username);
+
+        // Afirma que o objeto UserDetails retornado não é nulo e tem o nome de usuário correto
+        Assertions.assertNotNull(userDetails);
+        Assertions.assertEquals(username, userDetails.getUsername());
+
+        // Verifique se userRepository.findByLogin foi chamado exatamente uma vez com o argumento correto
+        Mockito.verify(userRepository, Mockito.times(1)).findByLogin(username);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUserDoesNotExist() {
+        String username = "jane";
+
+        // Configure o userRepository simulado para retornar nulo quando findByLogin for chamado
+        Mockito.when(userRepository.findByLogin(username)).thenReturn(null);
+
+        // Chama o método em teste e afirma que ele lança a exceção esperada
+        Assertions.assertThrows(UsernameNotFoundException.class, () -> {
+            yourClass.loadUserByUsername(username);
+        });
+
+        // Verifique se userRepository.findByLogin foi chamado exatamente uma vez com o argumento correto
+        Mockito.verify(userRepository, Mockito.times(1)).findByLogin(username);
+    }
+}
